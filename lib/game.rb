@@ -3,9 +3,7 @@
 # for playing a full game of stickman
 class Game
   require_relative 'word'
-
-  # if user makes more than this many incorrect guesses, it is game over
-  INCORRECT_GUESSES = 10
+  require_relative 'stickman'
 
   def initialize
     @secret_word = Word.new
@@ -17,12 +15,13 @@ class Game
   end
 
   # plays an entire game of hangman
-  # Returns true if user won, false otherwise
   def play_game
     until lost_game? || won_game?
-      puts "Incorrect guesses: #{@num_incorrect}/#{INCORRECT_GUESSES}"
+      display_stats
       play_round
     end
+
+    display_stats
 
     if lost_game?
       puts "You lost! The word was #{@secret_word}"
@@ -33,8 +32,17 @@ class Game
 
   private
 
+  # draws the stickman, shows incorrect guesses
+  def display_stats
+    Stickman.draw_stickman(@num_incorrect)
+    puts "Incorrect guesses: #{@num_incorrect}/#{Stickman::INCORRECT_GUESSES}"
+
+    # show the progress on the word
+    puts @secret_word.to_s_with_letters(@letters_guessed)
+  end
+
   def lost_game?
-    @num_incorrect >= INCORRECT_GUESSES
+    @num_incorrect >= Stickman::INCORRECT_GUESSES
   end
 
   def won_game?
@@ -42,17 +50,12 @@ class Game
   end
 
   def play_round
-    # show the progress on the word
-    puts @secret_word.to_s_with_letters(@letters_guessed)
-
     # get the user's guess
     letter = guess_letter
 
     @letters_guessed.push(letter)
 
     @num_incorrect += 1 unless @secret_word.letter_correct?(letter)
-
-    # TODO: draw stickman
   end
 
   # prompts for a letter and returns lowercase user input
