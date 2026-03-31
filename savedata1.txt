@@ -1,0 +1,1 @@
+{"@secret_word":"shark","@letters_guessed":["e","h","n","s","o","a","d","k","c","m","r"],"@num_incorrect":6}

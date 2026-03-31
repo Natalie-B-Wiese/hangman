@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
+require_relative 'serializable'
+
 # for playing a full game of stickman
 class Game
   require_relative 'word'
   require_relative 'stickman'
+
+  include Serializable
+  attr_accessor :secret_word, :letters_guessed, :num_incorrect
 
   def initialize
     @secret_word = Word.new
@@ -24,6 +29,18 @@ class Game
       puts "You lost! The word was #{@secret_word}"
     else
       puts "You won! The word was #{@secret_word}"
+    end
+  end
+
+  # needs a custom unserialize method in order to deserialize secret_word as an object
+  def unserialize(string)
+    obj = @@serializer.parse(string)
+
+    # deserialize the secret word as an object
+    obj['@secret_word'] = Word.new(obj['@secret_word'])
+
+    obj.each_key do |key|
+      instance_variable_set(key, obj[key])
     end
   end
 

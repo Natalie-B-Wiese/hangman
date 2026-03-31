@@ -10,8 +10,8 @@ class Word
 
   UNKNOWN_LETTER = '_'
 
-  def initialize
-    @word = choose_random_word
+  def initialize(word = nil)
+    @word = word || choose_random_word
   end
 
   def to_s
