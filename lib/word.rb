@@ -18,13 +18,11 @@ class Word
 
   private
 
-  # returns the list of words in WORD_LIST_FILE_NAME that are between 5 and 12 characters long
+  # returns the list of words in WORD_LIST_FILE_NAME that a valid length
   def valid_word_list_array
     # each line is a new word
     # Chomp the '\n' away and ensure the words are lowercase
     all_words_in_file = File.readlines(WORD_LIST_FILE_NAME).map { |line| line.chomp.downcase }
-
-    # return only words that are valid in length
     all_words_in_file.select { |word| word.length >= MIN_WORD_LENGTH && word.length <= MAX_WORD_LENGTH }
   end
 

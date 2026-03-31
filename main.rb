@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'lib/word'
+require_relative 'lib/game'
 
-secret_word = Word.new
+game = Game.new
 
-puts "Secret word is: #{secret_word}"
+(1..10).each do |round|
+  puts "Round #{round}/10"
+  game.play_round
+end
+
+puts 'Game over'
