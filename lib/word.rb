@@ -35,6 +35,13 @@ class Word
     @word.downcase.include?(letter.downcase)
   end
 
+  # returns an array of letters within letters_guessed that are incorrect
+  def incorrect_letters(letters_guessed)
+    letters_guessed.reject do |letter|
+      letter_correct?(letter)
+    end
+  end
+
   # returns true if user guessed all the letters in the word
   def word_guessed?(letters_guessed)
     (@word.chars - letters_guessed).empty?

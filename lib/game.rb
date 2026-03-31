@@ -37,6 +37,9 @@ class Game
     Stickman.draw_stickman(@num_incorrect)
     puts "Incorrect guesses: #{@num_incorrect}/#{Stickman::INCORRECT_GUESSES}"
 
+    incorrect_letters = @secret_word.incorrect_letters(@letters_guessed)
+    puts "Incorrect letters: #{incorrect_letters.join(' ')}" if incorrect_letters.empty? == false
+
     # show the progress on the word
     puts @secret_word.to_s_with_letters(@letters_guessed)
   end
