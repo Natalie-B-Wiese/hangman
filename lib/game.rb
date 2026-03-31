@@ -9,9 +9,6 @@ class Game
     @secret_word = Word.new
     @letters_guessed = []
     @num_incorrect = 0
-
-    # debug purposes only. Delete
-    puts "Secret word is: #{@secret_word}"
   end
 
   # plays an entire game of hangman
