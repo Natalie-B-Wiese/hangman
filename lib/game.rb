@@ -7,17 +7,25 @@ class Game
   def initialize
     @secret_word = Word.new
     @letters_guessed = []
+    @num_incorrect = 0
 
     # debug purposes only. Delete
     puts "Secret word is: #{@secret_word}"
   end
 
   def play_round
-    letter = guess_letter
-    @letters_guessed.push(letter)
-  end
+    # show the progress on the word
+    puts @secret_word.to_s_with_letters(@letters_guessed)
 
-  private
+    # get the user's guess
+    letter = guess_letter
+
+    @letters_guessed.push(letter)
+
+    @num_incorrect += 1 unless @secret_word.letter_correct?(letter)
+
+    # TODO: draw stickman
+  end
 
   # prompts for a letter and returns lowercase user input
   def letter_prompt_answer

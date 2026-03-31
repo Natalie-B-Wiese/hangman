@@ -8,12 +8,31 @@ class Word
   MIN_WORD_LENGTH = 5
   MAX_WORD_LENGTH = 12
 
+  UNKNOWN_LETTER = '_'
+
   def initialize
     @word = choose_random_word
   end
 
   def to_s
     @word
+  end
+
+  # returns the word with placeholder (_) for unknown letters.
+  def to_s_with_letters(letters_guessed = [])
+    @word.chars.reduce('') do |total, letter|
+      if letters_guessed.include?(letter)
+        "#{total} #{letter}"
+      else
+        "#{total} #{UNKNOWN_LETTER}"
+      end
+    end
+  end
+
+  # returns true if the word contains the specified letter
+  # Case insensitive search
+  def letter_correct?(letter)
+    @word.downcase.include?(letter.downcase)
   end
 
   private
