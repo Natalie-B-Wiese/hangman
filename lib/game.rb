@@ -4,6 +4,9 @@
 class Game
   require_relative 'word'
 
+  # if user makes more than this many incorrect guesses, it is game over
+  INCORRECT_GUESSES = 10
+
   def initialize
     @secret_word = Word.new
     @letters_guessed = []
@@ -11,6 +14,31 @@ class Game
 
     # debug purposes only. Delete
     puts "Secret word is: #{@secret_word}"
+  end
+
+  # plays an entire game of hangman
+  # Returns true if user won, false otherwise
+  def play_game
+    until lost_game? || won_game?
+      puts "Incorrect guesses: #{@num_incorrect}/#{INCORRECT_GUESSES}"
+      play_round
+    end
+
+    if lost_game?
+      puts "You lost! The word was #{@secret_word}"
+    else
+      puts "You won! The word was #{@secret_word}"
+    end
+  end
+
+  private
+
+  def lost_game?
+    @num_incorrect >= INCORRECT_GUESSES
+  end
+
+  def won_game?
+    @secret_word.word_guessed?(@letters_guessed)
   end
 
   def play_round

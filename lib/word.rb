@@ -35,6 +35,11 @@ class Word
     @word.downcase.include?(letter.downcase)
   end
 
+  # returns true if user guessed all the letters in the word
+  def word_guessed?(letters_guessed)
+    (@word.chars - letters_guessed).empty?
+  end
+
   private
 
   # returns the list of words in WORD_LIST_FILE_NAME that a valid length
