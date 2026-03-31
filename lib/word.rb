@@ -4,6 +4,10 @@
 class Word
   WORD_LIST_FILE_NAME = 'google-10000-english-no-swears.txt'
 
+  # min and max word length are inclusive
+  MIN_WORD_LENGTH = 5
+  MAX_WORD_LENGTH = 12
+
   def initialize
     @word = choose_random_word
   end
@@ -20,8 +24,8 @@ class Word
     # Chomp the '\n' away and ensure the words are lowercase
     all_words_in_file = File.readlines(WORD_LIST_FILE_NAME).map { |line| line.chomp.downcase }
 
-    # return only words between 5 and 12 characters in length
-    all_words_in_file.select { |word| word.length >= 5 && word.length <= 12 }
+    # return only words that are valid in length
+    all_words_in_file.select { |word| word.length >= MIN_WORD_LENGTH && word.length <= MAX_WORD_LENGTH }
   end
 
   # chooses a random word from results of valid_word_list_array method
