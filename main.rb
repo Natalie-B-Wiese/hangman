@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require_relative 'lib/word'
 
-secret_word=Word.new()
+secret_word = Word.new
 
 puts "Secret word is: #{secret_word}"
