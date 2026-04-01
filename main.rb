@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'lib/game'
-require_relative 'lib/save_load'
+require_relative 'lib/start_setup'
 
-game = Game.new
+setup = StartSetup.new
 
-game.play_game
-
-# save_data = SaveLoad.load_serialized_game_data('savedata1.txt')
-
-# if save_data
-# game.unserialize(save_data)
-
-# game.play_game
-
-# end
+if setup.game.nil?
+  puts 'Setup failed or was cancelled'
+else
+  setup.game.play_game
+end

@@ -8,6 +8,18 @@ class SaveLoad
   SAVE_FILE_NAME = 'game'
   EXT = '.txt'
 
+  # Lists all save files and returns true if there are save files
+  def self.print_all_save_files
+    if File.directory?(SAVE_DIR) == false || Dir.children(SAVE_DIR).empty?
+      puts 'There are no save files'
+      false
+    else
+      puts 'Save files: '
+      puts Dir.children(SAVE_DIR)
+      true
+    end
+  end
+
   # saves a game into a file
   def self.save_serialized_game(serialized_game)
     filename = new_file_name
@@ -18,12 +30,15 @@ class SaveLoad
     puts "Successfully saved game as #{file_name_without_path(filename)}"
   end
 
+  # filename parameter does not include path
   def self.load_serialized_game_data(filename)
+    filename = File.join(SAVE_DIR, filename)
     if File.exist? filename
       puts 'Loading file'
       File.readlines(filename).join("\n")
     else
       puts 'File does not exist!'
+      nil
     end
   end
 
