@@ -5,13 +5,13 @@ require_relative 'lib/save_load'
 
 game = Game.new
 
-save_data = SaveLoad.load_serialized_game_data('savedata1.txt')
+game.play_game
 
-if save_data
-  game.unserialize(save_data)
+# save_data = SaveLoad.load_serialized_game_data('savedata1.txt')
 
-  game.play_game
+# if save_data
+# game.unserialize(save_data)
 
-  # test of writing complete game to file
-  SaveLoad.save_serialized_game(game.serialize)
-end
+# game.play_game
+
+# end

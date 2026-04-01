@@ -1,0 +1,1 @@
+{"@secret_word":"amenities","@letters_guessed":["e","h","r"],"@num_incorrect":2,"@has_quit":false}

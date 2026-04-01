@@ -6,6 +6,7 @@ require_relative 'serializable'
 class Game
   require_relative 'word'
   require_relative 'stickman'
+  require_relative 'save_load'
 
   include Serializable
   attr_accessor :secret_word, :letters_guessed, :num_incorrect
@@ -14,11 +15,12 @@ class Game
     @secret_word = Word.new
     @letters_guessed = []
     @num_incorrect = 0
+    @has_quit = false
   end
 
   # plays an entire game of hangman
   def play_game
-    until lost_game? || won_game?
+    until lost_game? || won_game? || @has_quit
       display_stats
       play_round
     end
@@ -27,7 +29,7 @@ class Game
 
     if lost_game?
       puts "You lost! The word was #{@secret_word}"
-    else
+    elsif won_game?
       puts "You won! The word was #{@secret_word}"
     end
   end
@@ -70,14 +72,29 @@ class Game
     # get the user's guess
     letter = guess_letter
 
-    @letters_guessed.push(letter)
+    if letter == '1'
+      save_and_quit
+    elsif letter == '0'
+      quit
+    else
+      @letters_guessed.push(letter)
+      @num_incorrect += 1 unless @secret_word.letter_correct?(letter)
+    end
+  end
 
-    @num_incorrect += 1 unless @secret_word.letter_correct?(letter)
+  def save_and_quit
+    SaveLoad.save_serialized_game(serialize)
+    quit
+  end
+
+  def quit
+    puts 'Quitting game'
+    @has_quit = true
   end
 
   # prompts for a letter and returns lowercase user input
   def letter_prompt_answer
-    puts 'Enter letter: '
+    puts 'Guess a letter (or input 1 to save and quit, or input 0 to quit without saving): '
     gets.chomp.downcase
   end
 
