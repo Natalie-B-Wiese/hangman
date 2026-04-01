@@ -25,7 +25,8 @@ class Game
       play_round
     end
 
-    display_stats
+    # don't show display_stats when the game is quit
+    display_stats if @has_quit == false
 
     if lost_game?
       puts "You lost! The word was #{@secret_word}"
